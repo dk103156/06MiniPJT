@@ -21,7 +21,8 @@ public interface PurchaseService {
 	// 구매 정보 리스트
 	public Map<String, Object> getPurchaseList(Search search, String buyerId) throws Exception;
 	
-		public HashMap<String,Object> getSaleList(Search search) throws Exception;
+	// 판매 이력 리스트
+	public Map<String,Object> getSaleList(Search search) throws Exception;
 	
 	// 구매 정보 수정
 	public void updatePurchase(Purchase purchase) throws Exception;

@@ -63,6 +63,11 @@ function history(){
 					</td>
 				</tr>
 				<tr>
+					<td class="Depth03">
+						<a href="/listSale.do"  target="rightFrame">판매이력조회</a>
+					</td>
+				</tr>				
+				<tr>
 					<td class="DepthEnd">&nbsp;</td>
 				</tr>
 			</table>

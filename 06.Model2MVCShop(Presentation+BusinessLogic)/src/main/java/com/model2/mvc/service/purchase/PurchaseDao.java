@@ -21,7 +21,10 @@ public interface PurchaseDao {
 	// SELECT LIST 	
 	public List<Purchase> getPurchaseList(Search search,String buyerId) throws Exception;
 	
-		public HashMap<String,Object> getSaleList(Search search) throws Exception;
+	// SELECT LIST
+	public List<Purchase> getSaleList(Search search) throws Exception;
+	
+	public int getTotalCountSale() throws Exception;
 		
 	// UPDATE (구매정보)
 	public void updatePurchase(Purchase purchase) throws Exception;

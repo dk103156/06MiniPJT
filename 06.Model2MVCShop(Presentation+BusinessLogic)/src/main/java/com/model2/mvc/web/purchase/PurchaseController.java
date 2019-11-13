@@ -2,9 +2,7 @@ package com.model2.mvc.web.purchase;
 
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,112 +86,121 @@ public class PurchaseController {
 		return "forward:/purchase/addPurchase.jsp";
 	}
 	
-//	@RequestMapping("/getUser.do")
-//	public String getUser( @RequestParam("userId") String userId , Model model ) throws Exception {
-//		
-//		System.out.println("/getUser.do");
-//		//Business Logic
-//		User user = userService.getUser(userId);
-//		// Model 과 View 연결
-//		model.addAttribute("user", user);
-//		
-//		return "forward:/user/getUser.jsp";
-//	}
-//	
-//	@RequestMapping("/updateUserView.do")
-//	public String updateUserView( @RequestParam("userId") String userId , Model model ) throws Exception{
-//
-//		System.out.println("/updateUserView.do");
-//		//Business Logic
-//		User user = userService.getUser(userId);
-//		// Model 과 View 연결
-//		model.addAttribute("user", user);
-//		
-//		return "forward:/user/updateUser.jsp";
-//	}
-//	
-//	@RequestMapping("/updateUser.do")
-//	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session) throws Exception{
-//
-//		System.out.println("/updateUser.do");
-//		//Business Logic
-//		userService.updateUser(user);
-//		
-//		String sessionId=((User)session.getAttribute("user")).getUserId();
-//		if(sessionId.equals(user.getUserId())){
-//			session.setAttribute("user", user);
-//		}
-//		
-//		return "redirect:/getUser.do?userId="+user.getUserId();
-//	}
-//	
-//	@RequestMapping("/loginView.do")
-//	public String loginView() throws Exception{
-//		
-//		System.out.println("/loginView.do");
-//
-//		return "redirect:/user/loginView.jsp";
-//	}
-//	
-//	@RequestMapping("/login.do")
-//	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
-//		
-//		System.out.println("/login.do");
-//		//Business Logic
-//		User dbUser=userService.getUser(user.getUserId());
-//		
-//		if( user.getPassword().equals(dbUser.getPassword())){
-//			session.setAttribute("user", dbUser);
-//		}
-//		
-//		return "redirect:/index.jsp";
-//	}
-//	
-//	@RequestMapping("/logout.do")
-//	public String logout(HttpSession session ) throws Exception{
-//		
-//		System.out.println("/logout.do");
-//		
-//		session.invalidate();
-//		
-//		return "redirect:/index.jsp";
-//	}
-//	
-//	@RequestMapping("/checkDuplication.do")
-//	public String checkDuplication( @RequestParam("userId") String userId , Model model ) throws Exception{
-//		
-//		System.out.println("/checkDuplication.do");
-//		//Business Logic
-//		boolean result=userService.checkDuplication(userId);
-//		// Model 과 View 연결
-//		model.addAttribute("result", new Boolean(result));
-//		model.addAttribute("userId", userId);
-//
-//		return "forward:/user/checkDuplication.jsp";
-//	}
-//	
-//	@RequestMapping("/listUser.do")
-//	public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
-//		
-//		System.out.println("/listUser.do");
-//		
-//		if(search.getCurrentPage() ==0 ){
-//			search.setCurrentPage(1);
-//		}
-//		search.setPageSize(pageSize);
-//		
-//		// Business logic 수행
-//		Map<String , Object> map=userService.getUserList(search);
-//		
-//		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-//		System.out.println(resultPage);
-//		
-//		// Model 과 View 연결
-//		model.addAttribute("list", map.get("list"));
-//		model.addAttribute("resultPage", resultPage);
-//		model.addAttribute("search", search);
-//		
-//		return "forward:/user/listUser.jsp";
-//	}
+	@RequestMapping("/getPurchase.do")
+	public String getPurchase( @RequestParam("tranNo") int tranNo , Model model ) throws Exception {
+		
+		System.out.println("/getPurchase.do");
+		//Business Logic
+		Purchase purchase = purchaseService.getPurchase(tranNo);
+		// Model 과 View 연결
+		model.addAttribute("purchase", purchase);
+		
+		return "forward:/purchase/getPurchase.jsp";
+	}
+	
+	
+	
+	@RequestMapping("/updatePurchaseView.do")
+	public String updatePurchaseView( @RequestParam("tranNo") int tranNo , Model model ) throws Exception{
+
+		System.out.println("/updatePurchaseView.do");
+		//Business Logic
+		Purchase purchase = purchaseService.getPurchase(tranNo);
+		// Model 과 View 연결
+		model.addAttribute("purchase", purchase);
+		
+		return "forward:/purchase/updatePurchaseView.jsp";
+	}
+	
+	@RequestMapping("/updatePurchase.do")
+	public String updatePurchase( @ModelAttribute("purchase") Purchase purchase, @RequestParam("tranNo") int tranNo, @RequestParam("buyerId") String buyerId, Model model, HttpServletRequest request ) throws Exception{
+
+		System.out.println("/updatePurchase.do");
+		//Business Logic
+		purchase = purchaseService.getPurchase(tranNo);
+		
+		purchase.getBuyer().setUserId(buyerId);
+		
+		purchaseService.updatePurchase(purchase);
+		
+		// Model 과 View 연결
+		model.addAttribute("purchase", purchase);
+
+		
+		return "forward:/purchase/getPurchase.jsp";
+	}
+	
+	
+	@RequestMapping("/listPurchase.do")
+	public String listPurchase( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+		
+		System.out.println("/listPurchase.do");
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		// Business logic 수행
+		User user =(User)request.getSession().getAttribute("user");
+		Map<String , Object> map = purchaseService.getPurchaseList(search, user.getUserId());
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		// Model 과 View 연결
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		
+		return "forward:/purchase/listPurchase.jsp";
+	}
+	
+	
+	@RequestMapping("/listSale.do")
+	public String listSale(@ModelAttribute("search") Search search, Model model ) throws Exception {
+		
+		System.out.println("/listSale.do");
+		
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		// Business logic 수행
+		Map<String, Object> map = purchaseService.getSaleList(search);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
+		
+		// Model 과 View 연결
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+
+		return "forward:/purchase/listSale.jsp";
+	}
+	
+	@RequestMapping("/updateTranCode.do")
+	public String updateTranCode( @ModelAttribute("purchase") Purchase purchase, @RequestParam("tranNo") int tranNo, @RequestParam("tranCode") String tranCode, HttpServletRequest request) throws Exception {
+		
+		System.out.println("/updateTranCode.do");
+		
+		// Business logic 수행
+		User user =(User)request.getSession().getAttribute("user");
+		
+		purchase.setTranNo(tranNo);
+		purchase.setTranCode(tranCode);
+
+		purchase =purchaseService.getPurchase(tranNo);
+		
+		purchaseService.updateTranCode(purchase);
+
+		
+		if(user.getRole().equals("admin")) {
+			return "redirect:listProduct.do?menu=manage";
+		}
+			return "redirect:listPurchase.do";
+		
+	}
 	
 }

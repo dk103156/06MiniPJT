@@ -53,12 +53,12 @@
 	 <update	id="updatePurchase"	parameterType="purchase" >
 	   	UPDATE transaction
 	   	<set>
-			payment_option = #{paymentOption},
-			receiver_name = #{receiverName},
-			receiver_phone = #{receiverPhone},
-			demailaddr = #{divyAddr},
-			dlvy_request = #{divyRequest},
-			dlvy_date = #{divyDate}
+			payment_option = #{paymentOption:CHAR},
+			receiver_name = #{receiverName:VARCHAR},
+			receiver_phone = #{receiverPhone:VARCHAR},
+			demailaddr = #{divyAddr:VARCHAR},
+			dlvy_request = #{divyRequest:VARCHAR},
+			dlvy_date = #{divyDate:DATE}
 	   	</set>
 	   	WHERE tran_no = #{tranNo}
 	 </update>
@@ -123,7 +123,18 @@
 	 </select>
 	 
 	 
-	 
+	<select id="getSaleList" parameterType="search" resultMap="purchaseSelectMap">
+		SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  			FROM ( SELECT * FROM transaction ORDER BY tran_no ) inner_table
+				WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	</select>
+	
+	<select id="getTotalCountSale" resultType="int">
+		SELECT COUNT(*)
+		FROM ( SELECT * FROM transaction ORDER BY tran_no ) countTable
+	</select>	 
 	 
 	 
 </mapper>

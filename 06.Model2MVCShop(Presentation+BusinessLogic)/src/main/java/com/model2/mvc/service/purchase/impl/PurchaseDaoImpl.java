@@ -60,9 +60,13 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	}
 
 	
-		public HashMap<String, Object> getSaleList(Search search) throws Exception {
-			return null;
-		}
+	public List<Purchase> getSaleList(Search search) throws Exception {
+		return sqlSession.selectList("PurchaseMapper.getSaleList",search);
+	}
+	
+	public int getTotalCountSale() throws Exception {
+		return sqlSession.selectOne("PurchaseMapper.getTotalCountSale");
+	}
 
 	
 	public void updatePurchase(Purchase purchase) throws Exception {
