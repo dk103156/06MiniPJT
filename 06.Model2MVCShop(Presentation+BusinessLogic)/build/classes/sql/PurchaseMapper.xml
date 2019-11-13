@@ -10,7 +10,7 @@
 	<resultMap id="purchaseSelectMap" type="purchase">
 		<result property="tranNo" 									column="tran_no" 							jdbcType="NUMERIC"/>
 		<result property="purchaseProd.prodNo"		column="prod_no" 							jdbcType="NUMERIC" />
-		<result property="buyer.userId" 						column="buyer_id" 							jdbcType="VARCHAR" />
+		<result property="buyer.userId" 							column="buyer_id" 							jdbcType="VARCHAR" />
 		<result property="paymentOption" 					column="payment_option" 			jdbcType="CHAR" />
 		<result property="receiverName" 						column="receiver_name" 				jdbcType="VARCHAR" />
 		<result property="receiverPhone" 						column="receiver_phone" 				jdbcType="VARCHAR" />

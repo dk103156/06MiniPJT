@@ -101,11 +101,11 @@ public class PurchaseController {
 	
 	
 	@RequestMapping("/updatePurchaseView.do")
-	public String updatePurchaseView( @RequestParam("tranNo") int tranNo , Model model ) throws Exception{
+	public String updatePurchaseView( @ModelAttribute("purchase") Purchase purchase, @RequestParam("tranNo") int tranNo , Model model ) throws Exception{
 
 		System.out.println("/updatePurchaseView.do");
 		//Business Logic
-		Purchase purchase = purchaseService.getPurchase(tranNo);
+		purchase = purchaseService.getPurchase(tranNo);
 		// Model 과 View 연결
 		model.addAttribute("purchase", purchase);
 		
@@ -113,19 +113,21 @@ public class PurchaseController {
 	}
 	
 	@RequestMapping("/updatePurchase.do")
-	public String updatePurchase( @ModelAttribute("purchase") Purchase purchase, @RequestParam("tranNo") int tranNo, @RequestParam("buyerId") String buyerId, Model model, HttpServletRequest request ) throws Exception{
+	public String updatePurchase( @ModelAttribute("purchase") Purchase purchase, @RequestParam("tranNo") int tranNo, @RequestParam("prodNo") int prodNo, Model model, HttpServletRequest request ) throws Exception{
 
 		System.out.println("/updatePurchase.do");
-		//Business Logic
-		purchase = purchaseService.getPurchase(tranNo);
+		//Business Logic		
+		User user= (User)request.getSession().getAttribute("user");
+		Product product =productService.getProduct(prodNo);
 		
-		purchase.getBuyer().setUserId(buyerId);
+		purchase.setPurchaseProd(product);
+		purchase.setBuyer(user);
+		purchase.setTranNo(tranNo);		
 		
 		purchaseService.updatePurchase(purchase);
 		
 		// Model 과 View 연결
-		model.addAttribute("purchase", purchase);
-
+		model.addAttribute("purchase", purchaseService.getPurchase(tranNo));
 		
 		return "forward:/purchase/getPurchase.jsp";
 	}
