@@ -59,9 +59,10 @@ public class PurchaseController {
 		System.out.println("/addPurchaseView.do");
 
 		HttpSession session = request.getSession();
-		
+		// Business logic 수행
 		Product product=productService.getProduct(prodNo);
 		User user = (User)session.getAttribute("user");
+		// Model 과 View 연결
 		model.addAttribute("product", product);
 		model.addAttribute("user", user);
 		
@@ -80,7 +81,7 @@ public class PurchaseController {
 		purchase.setBuyer(user);
 		purchase.setPurchaseProd(product);
 		purchaseService.addPurchase(purchase);
-		
+		// Model 과 View 연결
 		model.addAttribute("purchase", purchase);
 		
 		return "forward:/purchase/addPurchase.jsp";
