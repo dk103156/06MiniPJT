@@ -1,0 +1,31 @@
+// 1. users 테이블 콘솔 컬럼간격 정리
+
+col  USER_ID for a15;
+col  USER_NAME for a15;
+col  PASSWORD for a15;
+col  ROLE for a15;
+col  SSN for a15;
+col  CELL_PHONE for a15;
+col  ADDR for a20;
+col  EMAIL for a15;
+col  REG_DATE for a15;
+
+// 2. product 테이블 콘솔 컬럼간격 정리
+
+col  PROD_NAME for a20;
+col  PROD_DETAIL for a60;
+col  MANUFACTURE_DAY for a15;
+col  IMAGE_FILE for a30;
+col  REG_DATE for a15;
+
+// 3. transaction 테이블 콘솔 컬럼간격 정리
+
+col  BUYER_ID for a15;
+col  PAYMENT_OPTION for a15;
+col  RECEIVER_NAME for a15;
+col  RECEIVER_PHONE for a15;
+col  DEMAILADDR for a20;
+col  DLVY_REQUEST for a15;
+col  TRAN_STATUS_CODE for a20;
+col  ORDER_DATE for a15;
+col  DLVY_DATE for a15;
