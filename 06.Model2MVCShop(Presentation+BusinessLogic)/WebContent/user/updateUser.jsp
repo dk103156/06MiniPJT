@@ -48,6 +48,8 @@ function resetData() {
 
 <body bgcolor="#ffffff" text="#000000">
 
+<div style="width:98%; margin-left:10px;">
+
 <form name="detailForm"  method="post" >
 
 <%--<input type="hidden" name="userId" value="<%=user.getUserId() %>"> --%>
@@ -193,6 +195,7 @@ function resetData() {
 </table>
 
 </form>
+</div>
 
 </body>
 </html>

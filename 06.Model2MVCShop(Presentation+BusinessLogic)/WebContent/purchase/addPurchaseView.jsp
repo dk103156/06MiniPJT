@@ -24,6 +24,8 @@ function fncAddPurchase() {
 
 <body>
 
+<div style="width:98%; margin-left:10px;">
+
 <form name="addPurchase" method="post" action="/addPurchase.do?prodNo=${ product.prodNo }">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
@@ -223,7 +225,9 @@ function fncAddPurchase() {
 		</td>
 	</tr>
 </table>
+
 </form>
+</div>
 
 </body>
 </html>
