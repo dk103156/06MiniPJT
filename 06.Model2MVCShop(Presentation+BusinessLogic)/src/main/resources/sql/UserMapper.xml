@@ -35,8 +35,19 @@
 		WHERE user_id = #{value}
 	 </select>
 	 
-	 <!-- SQL : UPDATE -->
+	 <!-- SQL : UPDATE -->	 
 	 <update	id="updateUser"	parameterType="user" >
+	   	UPDATE users
+	   	<trim prefix="SET" suffixOverrides=",">
+	   		<if test="userName != null">user_name 	= #{userName} ,</if>
+			<if test="phone != null">cell_phone	= #{phone},</if>
+			<if test="addr != null">addr 				= #{addr}  ,</if>
+			<if test="email != null">email				=	#{email},</if>
+	   	</trim>
+	   	WHERE user_id = #{userId}
+	 </update>
+	 
+	 <!-- 	 <update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
 	   		user_name 	= #{userName} ,
@@ -45,7 +56,7 @@
 			email				=	#{email}
 	   	</set>
 	   	WHERE user_id = #{userId}
-	 </update>
+	 </update> -->
 		 
 	<!-- SQL : SELECT LIST -->
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
